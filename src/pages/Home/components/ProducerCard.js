@@ -1,4 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native"
+import Stars from "./Stars"
 
 export default function ProducerCard({ name, distance, image, stars }) {
   return (
@@ -6,7 +7,11 @@ export default function ProducerCard({ name, distance, image, stars }) {
       <View style={styles.card}>
         <Image style={styles.image} source={image} accessibilityLabel={name} />
         <View style={styles.info}>
-          <Text style={styles.name}>{name}</Text>
+          <View>
+            <Text style={styles.name}>{name}</Text>
+            <Stars quantity={stars} editable />
+          </View>
+
           <Text style={styles.distance}>{distance}</Text>
         </View>
       </View>
@@ -21,7 +26,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 6,
     flexDirection: "row",
-    // Shadow Android
+    // Shadow Androids
     elevation: 4,
     // Shadow IOS
     shadowColor: "#000",
