@@ -1,17 +1,9 @@
-import { useEffect, useState } from "react"
 import { FlatList, StyleSheet, Text } from "react-native"
-import { loadProducers } from "../../../services/loadData"
 import ProducerCard from "./ProducerCard"
+import useProducers from "../../../hooks/useProducers"
 
 export default function Producers({ header: Header }) {
-  const [title, setTitle] = useState("")
-  const [producersArr, setProducersArr] = useState([])
-
-  useEffect(() => {
-    const response = loadProducers()
-    setTitle(response.title)
-    setProducersArr(response.list)
-  }, [])
+  const { title, list } = useProducers()
 
   const HeaderList = () => {
     return <Text style={styles.title}>{title}</Text>
@@ -21,7 +13,7 @@ export default function Producers({ header: Header }) {
     <>
       <Header />
       <FlatList
-        data={producersArr}
+        data={list}
         ListHeaderComponent={HeaderList}
         renderItem={({ item }) => (
           <ProducerCard
@@ -30,7 +22,7 @@ export default function Producers({ header: Header }) {
             name={item.name}
             stars={item.stars}
           />
-        )} //
+        )}
         keyExtractor={({ name }) => name} // Similar ao key do .map()
       />
     </>

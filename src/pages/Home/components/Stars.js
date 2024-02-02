@@ -1,7 +1,6 @@
-import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native"
 import React, { useState } from "react"
-import starFilled from "../../../assets/estrela.png"
-import star from "../../../assets/estrelaCinza.png"
+import { View, StyleSheet } from "react-native"
+import Star from "./Star"
 
 export default function Stars({
   quantity: oldQuantity,
@@ -9,26 +8,17 @@ export default function Stars({
   large = false,
 }) {
   const [quantityStars, setQuantityStars] = useState(oldQuantity)
-
-  const styles = stylesFunction(large)
-
-  const getImage = (index) => {
-    if (index < quantityStars) {
-      return starFilled
-    } else return star
-  }
-
   const renderStars = () => {
     const score = []
     for (let i = 0; i < 5; i++) {
       score.push(
-        <TouchableOpacity
+        <Star
           key={i}
-          onPress={() => setQuantityStars(i + 1)}
+          large={large}
           disabled={!editable}
-        >
-          <Image style={styles.star} source={getImage(i)} />
-        </TouchableOpacity>
+          selected={i < quantityStars}
+          onPress={() => setQuantityStars(i + 1)}
+        />
       )
     }
     return score
@@ -37,13 +27,8 @@ export default function Stars({
   return <View style={styles.stars}>{renderStars()}</View>
 }
 
-const stylesFunction = (large) =>
-  StyleSheet.create({
-    stars: {
-      flexDirection: "row",
-    },
-    star: {
-      width: large ? 36 : 12,
-      height: large ? 36 : 12,
-    },
-  })
+const styles = StyleSheet.create({
+  stars: {
+    flexDirection: "row",
+  },
+})
